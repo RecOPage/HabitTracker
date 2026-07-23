@@ -486,6 +486,9 @@ function resetAllCards() {
 
 // Complete All Students Mission & Stamp Tracker
 window.completeAllStudents = function() {
+  if (state.isProcessingCompleteAll) return;
+  state.isProcessingCompleteAll = true;
+
   try { audio.playClick(); } catch (e) {}
 
   // Flip all student cards
@@ -496,7 +499,7 @@ window.completeAllStudents = function() {
   renderCardBinderGrid();
   updateProgressUI();
 
-  // Stamp 1 slot on streak tracker board
+  // Stamp exactly 1 slot on streak tracker board
   autoStampNextStreakSlot();
 
   // Play fanfare & fireworks
@@ -505,7 +508,8 @@ window.completeAllStudents = function() {
 
   setTimeout(() => {
     alert(`🎉 오늘의 습관 미션을 우리 반 전체가 [모두 달성]하였습니다! (일자 스탬프 획득 ⭐)`);
-  }, 100);
+    state.isProcessingCompleteAll = false;
+  }, 300);
 };
 
 // --- Spacebar 1-Minute Visual Pixel Timer Controller ---
@@ -615,19 +619,18 @@ function renderHallOfFame() {
       const streakSummary = item.streakSummary || `${item.totalDays || 10}일 도전 완주!`;
 
       card.innerHTML = `
-        <div class="hof-item-body">
-          <div class="hof-item-icon">🏆</div>
-          <div class="hof-item-details">
+        <div class="hof-item-icon">🏆</div>
+        <div class="hof-item-details">
+          <div class="hof-item-top-row">
             <span class="hof-item-title">${item.title}</span>
-            <span class="hof-item-date">📅 실천 기간: ${periodText}</span>
-            <span style="font-size:0.75rem; color:var(--pixel-yellow); margin-top:2px;">
-              ⭐️ 일자 스탬프: ${streakSummary}
-            </span>
+            <div class="hof-item-actions">
+              <button class="hof-action-icon-btn hof-btn-edit" title="습관 정보 수정" onclick="editHOFCard(${idx})">✏️</button>
+              <button class="hof-action-icon-btn hof-btn-delete" title="카드 삭제" onclick="deleteHOFCard(${idx})">🗑️</button>
+            </div>
           </div>
-        </div>
-        <div class="hof-item-actions">
-          <button class="pixel-btn pixel-btn-sm pixel-btn-warning" title="습관 정보 수정" onclick="editHOFCard(${idx})">✏️ 수정</button>
-          <button class="pixel-btn pixel-btn-sm pixel-btn-danger" title="카드 삭제" onclick="deleteHOFCard(${idx})">🗑️ 삭제</button>
+          <div class="hof-item-info-group">
+            <span class="hof-item-date">📅 ${periodText}</span>
+          </div>
         </div>
       `;
     }

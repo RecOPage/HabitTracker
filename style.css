@@ -1,38 +1,38 @@
 /* ==========================================================================
-   🎮 8-BIT RETRO PIXEL ART CLASSROOM DASHBOARD - CSS SYSTEM
-   🎨 Warm Retro Palette (No Blue) + Chunky Borders + Solid Block Pixel Shadows
+   🎮 8-BIT RETRO PIXEL ART CLASSROOM DASHBOARD - COMPLETE RESTORED CSS
    ========================================================================== */
 
 :root {
-  /* Warm Retro Arcade Palette */
-  --pixel-bg-main: #FDF6E3;        /* Warm Retro Light Beige Background */
-  --pixel-bg-app: #F4E8D1;         /* Warm Paper/Plank Beige Container */
+  /* Warm Retro Palette */
+  --pixel-bg-main: #3D2E24;        /* Deep Warm Wood Board Background */
+  --pixel-bg-app: #F4E8D1;         /* Warm Parchment Cream Paper Container */
   --pixel-bg-card: #FFFBEB;        /* Warm Cream Paper Card (Unflipped) */
-  --pixel-bg-card-flipped: #99E550;/* Retro Pixel Green Card (Flipped) */
+  --pixel-bg-card-flipped: #85D63B;/* Soft Retro Pixel Green Card (Flipped) */
   
-  --pixel-orange: #DF7126;       /* Retro Arcade Orange */
-  --pixel-green: #99E550;        /* Pixel Green */
+  --pixel-orange: #D96B27;       /* Warm Arcade Orange */
+  --pixel-green: #85D63B;        /* Soft Natural Pixel Green */
   --pixel-red: #D95763;          /* Dot Red */
-  --pixel-gold: #FBF236;         /* Gold Yellow */
-  --pixel-purple: #9A4B8E;       /* Retro Purple */
+  --pixel-gold: #F2E444;         /* Soft Gold Yellow */
+  --pixel-purple: #8C4382;       /* Soft RPG Purple */
   
-  --pixel-border-dark: #222034;  /* Deep Retro Chunky Border Color */
+  --pixel-border-dark: #222034;  /* Deep Retro Item Border Color */
   --pixel-text: #222034;         /* High Contrast Dark Retro Text */
-  --pixel-text-muted: #625565;   /* Retro Muted Text */
+  --pixel-text-muted: #6E5F52;   /* Warm Muted Text */
 
   --font-pixel: 'DungGeunMo', 'Galmuri', 'Press Start 2P', monospace, sans-serif;
-  --font-body: 'DungGeunMo', 'Gowun Dodum', sans-serif;
 }
 
-* {
+/* Force Pixel Font Across ALL Elements */
+*, *::before, *::after,
+body, input, textarea, select, button, span, div, p, h1, h2, h3, h4, h5, h6, label {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'DungGeunMo', monospace, sans-serif !important;
   image-rendering: pixelated;
 }
 
 body.pixel-body {
-  font-family: var(--font-pixel);
   background-color: var(--pixel-bg-main);
   color: var(--pixel-text);
   min-height: 100vh;
@@ -42,8 +42,8 @@ body.pixel-body {
   overflow-x: hidden;
   position: relative;
   background-image: 
-    radial-gradient(rgba(34, 32, 52, 0.08) 2px, transparent 2px),
-    radial-gradient(rgba(34, 32, 52, 0.08) 2px, var(--pixel-bg-main) 2px);
+    radial-gradient(rgba(0, 0, 0, 0.25) 2px, transparent 2px),
+    radial-gradient(rgba(0, 0, 0, 0.25) 2px, var(--pixel-bg-main) 2px);
   background-size: 32px 32px;
   background-position: 0 0, 16px 16px;
 }
@@ -63,22 +63,25 @@ body.pixel-body {
 .pixel-app-container {
   width: 95%;
   max-width: 1120px;
-  margin: 0 auto;
-  padding: 14px 16px;
+  margin: 20px auto;
+  padding: 20px 24px;
+  background: var(--pixel-bg-app);
+  border: 4px solid #281D17;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 0 2px #E8D7BE;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
 /* --------------------------------------------------------------------------
-   8-Bit Retro Buttons (Chunky Borders & Solid Block Pixel Shadows)
+   8-Bit Retro Interactive Buttons
    -------------------------------------------------------------------------- */
 .pixel-btn {
-  font-family: var(--font-pixel);
   font-size: 0.95rem;
   padding: 8px 16px;
   background: var(--pixel-orange);
-  color: #222034;
+  color: #ffffff;
   font-weight: bold;
   border: 3px solid var(--pixel-border-dark);
   border-radius: 4px;
@@ -86,6 +89,7 @@ body.pixel-body {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   transition: all 0.08s ease;
   user-select: none;
@@ -128,8 +132,11 @@ body.pixel-body {
   box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
+.pixel-btn-full {
+  width: 100%;
+}
+
 .pixel-badge {
-  font-family: var(--font-pixel);
   font-size: 0.75rem;
   padding: 3px 8px;
   border: 2px solid var(--pixel-border-dark);
@@ -148,17 +155,18 @@ body.pixel-body {
   padding: 1px 6px;
   border-radius: 3px;
   font-size: 0.75rem;
-  border: 1px solid rgba(34,32,52,0.4);
+  border: 1px solid rgba(0,0,0,0.2);
 }
 
 /* --------------------------------------------------------------------------
    8-Bit Top Header Navigation
    -------------------------------------------------------------------------- */
 .pixel-header {
-  background: var(--pixel-bg-app);
-  border: 4px solid var(--pixel-border-dark);
-  box-shadow: 4px 4px 0px var(--pixel-border-dark);
-  padding: 14px 22px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed #C5A98B;
+  box-shadow: none;
+  padding: 4px 0 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -190,7 +198,7 @@ body.pixel-body {
 }
 
 .header-titles .pixel-subtitle {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--pixel-text-muted);
 }
 
@@ -201,7 +209,7 @@ body.pixel-body {
   display: flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
   border-radius: 4px;
 }
 
@@ -230,6 +238,105 @@ body.pixel-body {
 }
 
 /* --------------------------------------------------------------------------
+   Daily Streak Tracker Section
+   -------------------------------------------------------------------------- */
+.pixel-streak-tracker-section {
+  background: rgba(232, 215, 190, 0.4);
+  border: 2px dashed #C5A98B;
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.streak-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.streak-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.streak-icon { font-size: 1.3rem; }
+
+.streak-title {
+  font-size: 1.05rem;
+  color: var(--pixel-text);
+  font-weight: bold;
+}
+
+.streak-count-info {
+  font-size: 0.85rem;
+  color: var(--pixel-orange);
+  background: #E8D7BE;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid #C5A98B;
+  font-weight: bold;
+}
+
+.streak-hint {
+  font-size: 0.8rem;
+  color: var(--pixel-text-muted);
+}
+
+.streak-slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.streak-slot {
+  width: 58px;
+  height: 52px;
+  background: var(--pixel-bg-card);
+  border: 3px solid var(--pixel-border-dark);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  transition: all 0.08s ease;
+  user-select: none;
+}
+
+.streak-slot:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.streak-slot:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px var(--pixel-border-dark);
+}
+
+.streak-slot.completed {
+  background: var(--pixel-green);
+  border-color: var(--pixel-border-dark);
+}
+
+.streak-slot-num {
+  font-size: 0.7rem;
+  color: var(--pixel-text);
+  font-weight: bold;
+}
+
+.streak-slot-icon {
+  font-size: 1.25rem;
+  margin-top: 1px;
+}
+
+/* --------------------------------------------------------------------------
    Toolbar & Progress Area
    -------------------------------------------------------------------------- */
 .pixel-main-content {
@@ -239,15 +346,15 @@ body.pixel-body {
 }
 
 .pixel-toolbar {
-  background: var(--pixel-bg-app);
-  border: 4px solid var(--pixel-border-dark);
-  padding: 14px 22px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed #C5A98B;
+  padding: 4px 0 16px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
 .target-status-box {
@@ -285,8 +392,9 @@ body.pixel-body {
 .pixel-progress-outer {
   width: 100%;
   height: 20px;
-  background: #E2D7C5;
+  background: #E8D7BE;
   border: 3px solid var(--pixel-border-dark);
+  border-radius: 3px;
   position: relative;
   overflow: hidden;
   box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2);
@@ -312,23 +420,23 @@ body.pixel-body {
 }
 
 /* --------------------------------------------------------------------------
-   Dynamic Card Binder Grid (RPG Empty Item Slot Style)
+   Dynamic Card Binder Grid Area
    -------------------------------------------------------------------------- */
 .card-binder-section {
-  background: var(--pixel-bg-app);
-  border: 4px solid var(--pixel-border-dark);
-  padding: 18px;
+  background: transparent;
+  border: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+  box-shadow: none;
 }
 
 .binder-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px dashed #C8B9A6;
+  border-bottom: 2px dashed #C5A98B;
   padding-bottom: 8px;
 }
 
@@ -346,13 +454,12 @@ body.pixel-body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 135px));
   justify-content: center;
-  gap: 12px;
-  padding: 4px;
+  gap: 14px;
+  padding: 8px 4px;
 }
 
-/* Retro 8-Bit Pixel Card (3D Flip Animation) */
 .pixel-card-item {
-  height: 132px;
+  height: 135px;
   perspective: 1000px;
   cursor: pointer;
   user-select: none;
@@ -377,40 +484,39 @@ body.pixel-body {
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border: 3px solid var(--pixel-border-dark);
+  border: 4px solid var(--pixel-border-dark);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 10px 8px;
-  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
-/* Card Front (Unflipped - RPG Inventory Card & Empty Slot Box) */
 .card-front {
   background: var(--pixel-bg-card);
 }
 
 .card-front:hover {
   filter: brightness(1.04);
+  transform: translateY(-2px);
 }
 
 .card-num-badge {
   font-size: 0.8rem;
   color: var(--pixel-text);
-  background: #E2D7C5;
+  background: #E8D7BE;
   border: 1px solid var(--pixel-border-dark);
   padding: 1px 6px;
   border-radius: 2px;
   font-weight: bold;
 }
 
-/* RPG Empty Item Slot (안쪽 음각 그림자 파인 느낌) */
 .card-avatar-box {
   width: 46px;
   height: 46px;
-  background: #E2D7C5;
+  background: #E8D7BE;
   border: 2px solid var(--pixel-border-dark);
   border-radius: 3px;
   box-shadow: inset 3px 3px 0px rgba(0, 0, 0, 0.25);
@@ -425,6 +531,7 @@ body.pixel-body {
   color: var(--pixel-text);
   font-weight: bold;
   text-align: center;
+  line-height: 1.1;
 }
 
 .card-status-label {
@@ -432,12 +539,11 @@ body.pixel-body {
   color: var(--pixel-text-muted);
 }
 
-/* Card Back (Flipped / Achieved State - Pixel Green) */
 .card-back {
   background: var(--pixel-bg-card-flipped);
   border-color: var(--pixel-border-dark);
   transform: rotateY(180deg);
-  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
 .card-back .card-num-badge {
@@ -462,24 +568,24 @@ body.pixel-body {
 }
 
 /* --------------------------------------------------------------------------
-   Hall of Fame / Archive Section (명예의 전당 앨범)
+   Hall of Fame / Archive Section
    -------------------------------------------------------------------------- */
 .hall-of-fame-section {
-  background: var(--pixel-bg-app);
-  border: 4px solid var(--pixel-border-dark);
-  padding: 18px;
+  background: transparent;
+  border: none;
+  border-top: 2px dashed #C5A98B;
+  padding-top: 18px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
 .hof-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px dashed #C8B9A6;
-  padding-bottom: 8px;
+  border-bottom: 2px dashed #C5A98B;
+  padding-bottom: 10px;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -507,39 +613,118 @@ body.pixel-body {
 }
 
 .hof-desc {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--pixel-text-muted);
 }
 
 .hof-badges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
 }
 
 .hof-item-card {
   background: var(--pixel-bg-card);
   border: 3px solid var(--pixel-border-dark);
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-radius: 4px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
 }
 
-.hof-item-body {
+.hof-item-icon {
+  font-size: 2.2rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.hof-item-details {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hof-item-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 10px;
+  width: 100%;
+}
+
+.hof-item-title {
+  font-size: 1.05rem;
+  color: var(--pixel-purple);
+  font-weight: bold;
+  line-height: 1.3;
+  word-break: keep-all;
   flex: 1;
 }
 
 .hof-item-actions {
   display: flex;
+  flex-direction: row;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.hof-action-icon-btn {
+  font-size: 0.95rem;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--pixel-border-dark);
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--pixel-border-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hof-action-icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px var(--pixel-border-dark);
+}
+
+.hof-btn-edit {
+  background: var(--pixel-gold);
+  color: #222034;
+}
+
+.hof-btn-delete {
+  background: var(--pixel-red);
+  color: #ffffff;
+}
+
+.hof-item-info-group {
+  display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+  border-top: 1px dashed #C5A98B;
+  padding-top: 6px;
+  min-width: 0;
+}
+
+.hof-item-date {
+  font-size: 0.82rem;
+  color: var(--pixel-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hof-item-streak {
+  font-size: 0.82rem;
+  color: #B86F28;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hof-edit-form {
@@ -549,28 +734,8 @@ body.pixel-body {
   width: 100%;
 }
 
-.hof-item-icon {
-  font-size: 1.9rem;
-}
-
-.hof-item-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.hof-item-title {
-  font-size: 1rem;
-  color: var(--pixel-purple);
-  font-weight: bold;
-}
-
-.hof-item-date {
-  font-size: 0.78rem;
-  color: var(--pixel-text-muted);
-}
-
 /* --------------------------------------------------------------------------
-   8-Bit Modals (Chunky Borders & Solid Block Shadows)
+   8-Bit Modals
    -------------------------------------------------------------------------- */
 .pixel-modal-backdrop {
   position: fixed;
@@ -578,11 +743,12 @@ body.pixel-body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(34, 32, 52, 0.65);
-  z-index: 800;
+  background: rgba(30, 20, 15, 0.75);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -596,19 +762,15 @@ body.pixel-body {
 .pixel-modal-card {
   background: var(--pixel-bg-app);
   border: 4px solid var(--pixel-border-dark);
-  box-shadow: 6px 6px 0px var(--pixel-border-dark);
   width: 90%;
-  max-width: 520px;
-  padding: 22px;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 18px 22px;
+  box-shadow: 8px 8px 0px var(--pixel-border-dark);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  transform: scale(0.95);
-  transition: transform 0.2s ease;
-}
-
-.pixel-modal-backdrop.active .pixel-modal-card {
-  transform: scale(1);
+  gap: 14px;
 }
 
 .modal-header {
@@ -616,7 +778,7 @@ body.pixel-body {
   justify-content: space-between;
   align-items: center;
   border-bottom: 3px solid var(--pixel-border-dark);
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 .modal-header h3 {
@@ -628,10 +790,15 @@ body.pixel-body {
   background: var(--pixel-red);
   color: white;
   border: 2px solid var(--pixel-border-dark);
-  padding: 2px 8px;
-  font-family: var(--font-pixel);
+  font-size: 1rem;
+  font-weight: bold;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   box-shadow: 2px 2px 0px var(--pixel-border-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pixel-close-btn:active {
@@ -652,36 +819,24 @@ body.pixel-body {
 }
 
 .setting-label {
-  font-size: 0.9rem;
-  color: var(--pixel-orange);
+  font-size: 0.95rem;
   font-weight: bold;
+  color: var(--pixel-text);
 }
 
 .setting-hint {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--pixel-text-muted);
 }
 
-.input-with-unit {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .pixel-input, .pixel-textarea {
-  font-family: var(--font-pixel);
-  font-size: 0.95rem;
-  padding: 8px 12px;
-  background: var(--pixel-bg-card);
+  background: #FFFBEB;
+  border: 3px solid var(--pixel-border-dark);
+  padding: 8px 10px;
+  font-size: 0.9rem;
   color: var(--pixel-text);
-  border: 2px solid var(--pixel-border-dark);
-  border-radius: 2px;
   outline: none;
-}
-
-.pixel-input:focus, .pixel-textarea:focus {
-  border-color: var(--pixel-orange);
-  background: #ffffff;
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.15);
 }
 
 .pixel-input-full {
@@ -690,261 +845,59 @@ body.pixel-body {
 
 .modal-actions {
   display: flex;
-  gap: 10px;
   justify-content: flex-end;
-  margin-top: 10px;
-}
-
-/* Manual Log Confirmation Card */
-.log-confirm-card {
-  max-width: 480px;
-}
-
-.log-preview-box {
-  background: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-dark);
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1);
-}
-
-.log-row {
-  display: flex;
-  gap: 8px;
-  font-size: 0.9rem;
-}
-
-.log-label {
-  color: var(--pixel-text-muted);
-  font-weight: bold;
-}
-
-.log-val {
-  color: var(--pixel-text);
-}
-
-.highlight-val {
-  color: var(--pixel-orange);
-  font-weight: bold;
-}
-
-.log-achiever-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
   margin-top: 6px;
-  max-height: 100px;
-  overflow-y: auto;
-}
-
-.achiever-badge {
-  background: var(--pixel-green);
-  color: #222034;
-  border: 1px solid var(--pixel-border-dark);
-  padding: 2px 6px;
-  font-size: 0.75rem;
-  border-radius: 2px;
-  font-weight: bold;
-}
-
-.confirm-notice-text {
-  font-size: 0.8rem;
-  color: var(--pixel-red);
-  line-height: 1.3;
-  font-weight: bold;
-}
-
-.banner-period {
-  font-size: 0.8rem;
-  color: #B86F28;
-  margin-top: 2px;
-  font-weight: bold;
-}
-
-.date-input-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.date-label {
-  font-size: 0.85rem;
-  color: var(--pixel-text-muted);
-  font-weight: bold;
-}
-
-.date-input {
-  width: 130px;
-  font-size: 0.85rem;
-  padding: 4px 8px;
-}
-
-.align-center {
-  text-align: center;
-  align-items: center;
 }
 
 .timer-pixel-card {
-  max-width: 520px;
+  max-width: 480px;
 }
 
-.timer-habit-info {
-  margin-bottom: 12px;
+.align-center {
+  align-items: center;
+  text-align: center;
 }
 
 .timer-habit-info h2 {
-  font-size: 1.4rem;
-  color: var(--pixel-orange);
-  margin: 6px 0;
+  font-size: 1.3rem;
+  color: var(--pixel-text);
+  margin-top: 6px;
 }
 
 .timer-period-text {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--pixel-text-muted);
-  font-weight: bold;
 }
 
 .pixel-timer-box {
-  background: var(--pixel-bg-card);
+  background: #222034;
+  color: var(--pixel-gold);
   border: 4px solid var(--pixel-border-dark);
-  box-shadow: inset 3px 3px 0px rgba(0,0,0,0.15);
-  padding: 16px 24px;
+  padding: 16px;
   border-radius: 4px;
-  margin: 12px 0 16px 0;
   width: 100%;
+  box-shadow: inset 3px 3px 0px rgba(0,0,0,0.5), 4px 4px 0px var(--pixel-border-dark);
 }
 
 .pixel-timer-number {
-  font-size: 3.5rem;
-  color: var(--pixel-orange);
+  font-size: 3.2rem;
   letter-spacing: 2px;
-  line-height: 1;
-  text-shadow: 1px 1px 0px var(--pixel-gold);
-  font-weight: bold;
 }
 
 .pixel-timer-status {
-  font-size: 0.95rem;
-  color: var(--pixel-text-muted);
-  margin-top: 6px;
-  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--pixel-green);
+  margin-top: 4px;
 }
 
 .timer-controls-row {
   display: flex;
-  justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
+  justify-content: center;
 }
 
 .timer-finish-action {
   width: 100%;
-  margin-bottom: 10px;
-}
-
-.pixel-btn-full {
-  width: 100%;
-  justify-content: center;
-}
-
-.timer-hint {
-  font-size: 0.78rem;
-  color: var(--pixel-text-muted);
-}
-
-/* --------------------------------------------------------------------------
-   Daily Habit Streak Tracker Section (기간별 일자 추적 스탬프 판)
-   -------------------------------------------------------------------------- */
-.pixel-streak-tracker-section {
-  background: var(--pixel-bg-app);
-  border: 4px solid var(--pixel-border-dark);
-  padding: 14px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-shadow: 4px 4px 0px var(--pixel-border-dark);
-}
-
-.streak-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.streak-title-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.05rem;
-  color: var(--pixel-orange);
-  font-family: var(--font-pixel);
-  font-weight: bold;
-}
-
-.streak-count-info {
-  background: var(--pixel-gold);
-  color: #222034;
-  border: 2px solid var(--pixel-border-dark);
-  padding: 2px 8px;
-  font-size: 0.8rem;
-  border-radius: 2px;
-  font-weight: bold;
-}
-
-.streak-hint {
-  font-size: 0.78rem;
-  color: var(--pixel-text-muted);
-}
-
-.streak-slots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
-  gap: 8px;
-}
-
-.streak-slot {
-  height: 58px;
-  background: #E2D7C5;
-  border: 2px solid var(--pixel-border-dark);
-  border-radius: 3px;
-  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 0.15s ease;
-}
-
-.streak-slot:hover {
-  border-color: var(--pixel-orange);
-  transform: scale(1.05);
-}
-
-.streak-slot-num {
-  font-size: 0.75rem;
-  color: var(--pixel-text-muted);
-}
-
-.streak-slot-icon {
-  font-size: 1.1rem;
-}
-
-.streak-slot.completed {
-  background: var(--pixel-green);
-  border: 2px solid var(--pixel-border-dark);
-  box-shadow: 2px 2px 0px var(--pixel-border-dark);
-}
-
-.streak-slot.completed .streak-slot-num {
-  color: #222034;
-  font-weight: bold;
+  margin-top: 6px;
 }
