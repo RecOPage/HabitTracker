@@ -1,5 +1,5 @@
 /* ==========================================================================
-   🎮 8-BIT RETRO PIXEL ART HABIT BINDER - JAVASCRIPT LOGIC
+   🎮 8-BIT RETRO PIXEL ART HABIT BINDER - COMPLETE BACKUP JAVASCRIPT
    ========================================================================== */
 
 // --- Application State ---
@@ -109,7 +109,6 @@ class PixelAudioController {
     }
   }
 
-  // 8-Bit Card Flip Blip Sound ("뾱!")
   playBlip() {
     this.init();
     if (!this.ctx) return;
@@ -131,7 +130,6 @@ class PixelAudioController {
     osc.stop(now + 0.1);
   }
 
-  // 8-Bit Goal Achieved Fanfare
   playFanfare() {
     this.init();
     if (!this.ctx) return;
@@ -290,7 +288,7 @@ class PixelStarEngine {
     this.ctx.fillStyle = color;
     this.ctx.fill();
     this.ctx.lineWidth = 2.5;
-    this.ctx.strokeStyle = "#222034"; // 8-Bit Chunky Dark Border
+    this.ctx.strokeStyle = "#222034";
     this.ctx.stroke();
   }
 
@@ -341,7 +339,7 @@ function renderActiveHabitUI() {
   document.getElementById("inputHabitTotalDays").value = state.activeHabit.totalDays;
 }
 
-// --- Daily Habit Streak Tracker Controller (기간별 일자 추적 스탬프 판) ---
+// --- Daily Habit Streak Tracker Controller ---
 function renderStreakTracker() {
   const grid = document.getElementById("streakSlotsGrid");
   const summaryText = document.getElementById("streakSummaryText");
@@ -437,7 +435,6 @@ function renderCardBinderGrid() {
   }
 }
 
-// Card Flip Interaction
 function toggleCardFlip(index, cardEl) {
   audio.playBlip();
 
@@ -452,7 +449,6 @@ function toggleCardFlip(index, cardEl) {
   updateProgressUI();
 }
 
-// Update Progress Toolbar UI & Trigger Nano Banana Fireworks
 function updateProgressUI() {
   const flippedCount = state.flippedCardIndices.size;
   const targetGoal = state.targetGoalCount;
@@ -475,7 +471,6 @@ function updateProgressUI() {
   }
 }
 
-// Reset Cards
 function resetAllCards() {
   audio.playClick();
   state.flippedCardIndices.clear();
@@ -484,25 +479,20 @@ function resetAllCards() {
   updateProgressUI();
 }
 
-// Complete All Students Mission & Stamp Tracker
 window.completeAllStudents = function() {
   if (state.isProcessingCompleteAll) return;
   state.isProcessingCompleteAll = true;
 
   try { audio.playClick(); } catch (e) {}
 
-  // Flip all student cards
   for (let i = 1; i <= state.studentCount; i++) {
     state.flippedCardIndices.add(i);
   }
 
   renderCardBinderGrid();
   updateProgressUI();
-
-  // Stamp exactly 1 slot on streak tracker board
   autoStampNextStreakSlot();
 
-  // Play fanfare & fireworks
   try { audio.playFanfare(); } catch (e) {}
   try { if (starEngine) starEngine.triggerCelebration(); } catch (e) {}
 
@@ -512,12 +502,10 @@ window.completeAllStudents = function() {
   }, 300);
 };
 
-// --- Spacebar 1-Minute Visual Pixel Timer Controller ---
 function openTimerModal() {
   audio.playClick();
   document.getElementById("modalTimerHabitTitle").textContent = state.activeHabit.title;
   document.getElementById("modalTimerHabitPeriod").textContent = `기간: ${state.activeHabit.startDate} ~ ${state.activeHabit.endDate} (${state.activeHabit.totalDays}일 미션)`;
-
   document.getElementById("timerModal").classList.add("active");
 }
 
@@ -568,13 +556,11 @@ function updateTimerDisplay() {
   document.getElementById("timerDisplay").textContent = `${m}:${s}`;
 }
 
-// Complete Mission via Timer: Mass Flip All Cards & Launch Fireworks!
 function massFlipAllCardsFromTimer() {
   closeTimerModal();
   completeAllStudents();
 }
 
-// --- Hall of Fame Archive Controller (완료 기념 카드 앨범) ---
 function renderHallOfFame() {
   const grid = document.getElementById("hofBadgesGrid");
   const badge = document.getElementById("hofCountBadge");
@@ -699,7 +685,6 @@ function completeActiveHabitToHOF() {
   state.hallOfFame.push(newItem);
   localStorage.setItem("pixel_hall_of_fame", JSON.stringify(state.hallOfFame));
 
-  // Reset current habit streak tracker for next challenge
   state.completedStreakDays.clear();
   localStorage.setItem("pixel_completed_streak_days", "[]");
 
@@ -709,58 +694,6 @@ function completeActiveHabitToHOF() {
   audio.playFanfare();
 }
 
-// --- Manual Log Confirmation Modal Controller ---
-function openManualLogConfirmModal() {
-  audio.playClick();
-
-  const backdrop = document.getElementById("confirmLogModal");
-  document.getElementById("logPreviewDate").textContent = new Date().toLocaleDateString("ko-KR");
-  document.getElementById("logPreviewHabit").textContent = state.activeHabit.title;
-  document.getElementById("logPreviewAchieverCount").textContent = `${state.flippedCardIndices.size}명`;
-
-  const achieverContainer = document.getElementById("logPreviewAchieverNames");
-  achieverContainer.innerHTML = "";
-
-  if (state.flippedCardIndices.size === 0) {
-    achieverContainer.innerHTML = `<span style="font-size:0.8rem; color:#94a3b8;">선택된 달성 학생이 없습니다.</span>`;
-  } else {
-    Array.from(state.flippedCardIndices).sort((a,b)=>a-b).forEach(num => {
-      const badge = document.createElement("span");
-      badge.className = "achiever-badge";
-      badge.textContent = getStudentDisplayName(num);
-      achieverContainer.appendChild(badge);
-    });
-  }
-
-  backdrop.classList.add("active");
-}
-
-function closeManualLogConfirmModal() {
-  document.getElementById("confirmLogModal").classList.remove("active");
-}
-
-function confirmSaveObservationLog() {
-  const achieverList = Array.from(state.flippedCardIndices).sort((a,b)=>a-b).map(n => getStudentDisplayName(n));
-
-  const newLog = {
-    id: Date.now(),
-    date: new Date().toLocaleDateString("ko-KR"),
-    habitTitle: state.activeHabit.title,
-    achieverCount: state.flippedCardIndices.size,
-    achievers: achieverList
-  };
-
-  const logs = JSON.parse(localStorage.getItem("pixel_observation_logs") || "[]");
-  logs.push(newLog);
-  localStorage.setItem("pixel_observation_logs", JSON.stringify(logs));
-
-  autoStampNextStreakSlot(); // Automatically stamp next day on streak tracker!
-  closeManualLogConfirmModal();
-  audio.playFanfare();
-  alert(`📝 관찰 일지가 명시적으로 기록 저장되었으며 일자 스탬프가 찍혔습니다! (달성 인원: ${state.flippedCardIndices.size}명)`);
-}
-
-// --- Settings Modal Controller ---
 function openSettingsModal() {
   audio.playClick();
   document.getElementById("inputStudentCount").value = state.studentCount;
@@ -844,15 +777,12 @@ function saveSettings() {
   closeSettingsModal();
 }
 
-// --- Event Listeners & Keyboard Shortcuts ---
 function setupEventListeners() {
-  // Settings Launchers
   document.getElementById("btnOpenSettings").addEventListener("click", openSettingsModal);
   document.getElementById("btnEditActiveHabit").addEventListener("click", openSettingsModal);
   document.getElementById("btnCloseSettings").addEventListener("click", closeSettingsModal);
   document.getElementById("btnSaveSettings").addEventListener("click", saveSettings);
 
-  // Timer Launchers & Controls
   document.getElementById("btnOpenTimerModal").addEventListener("click", openTimerModal);
   document.getElementById("btnCloseTimerModal").addEventListener("click", closeTimerModal);
   document.getElementById("btnTimerStart").addEventListener("click", startTimer);
@@ -860,20 +790,17 @@ function setupEventListeners() {
   document.getElementById("btnTimerReset").addEventListener("click", resetTimer);
   document.getElementById("btnTimerFinishMassFlip").addEventListener("click", massFlipAllCardsFromTimer);
 
-  // Complete All Action
   const btnCompleteAll = document.getElementById("btnCompleteAll");
   if (btnCompleteAll) {
     btnCompleteAll.addEventListener("click", completeAllStudents);
   }
 
-  // Card Reset
   document.getElementById("btnResetCards").addEventListener("click", () => {
     if (confirm("모든 학생 카드의 뒤집힘 상태를 초기화하시겠습니까?")) {
       resetAllCards();
     }
   });
 
-  // Complete Active Habit to Hall of Fame
   document.getElementById("btnCompleteHabit").addEventListener("click", completeActiveHabitToHOF);
 }
 
