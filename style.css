@@ -524,8 +524,29 @@ body.pixel-body {
   border-radius: 4px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 10px;
   box-shadow: 3px 3px 0px var(--pixel-border-dark);
+}
+
+.hof-item-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.hof-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hof-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
 }
 
 .hof-item-icon {

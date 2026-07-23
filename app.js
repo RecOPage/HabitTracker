@@ -485,7 +485,9 @@ function resetAllCards() {
 }
 
 // Complete All Students Mission & Stamp Tracker
-function completeAllStudents() {
+window.completeAllStudents = function() {
+  try { audio.playClick(); } catch (e) {}
+
   // Flip all student cards
   for (let i = 1; i <= state.studentCount; i++) {
     state.flippedCardIndices.add(i);
@@ -498,11 +500,13 @@ function completeAllStudents() {
   autoStampNextStreakSlot();
 
   // Play fanfare & fireworks
-  audio.playFanfare();
-  starEngine.triggerCelebration();
+  try { audio.playFanfare(); } catch (e) {}
+  try { if (starEngine) starEngine.triggerCelebration(); } catch (e) {}
 
-  alert(`🎉 오늘의 습관 미션을 우리 반 전체가 [모두 달성]하였습니다! (일자 스탬프 획득 ⭐)`);
-}
+  setTimeout(() => {
+    alert(`🎉 오늘의 습관 미션을 우리 반 전체가 [모두 달성]하였습니다! (일자 스탬프 획득 ⭐)`);
+  }, 100);
+};
 
 // --- Spacebar 1-Minute Visual Pixel Timer Controller ---
 function openTimerModal() {
@@ -587,22 +591,88 @@ function renderHallOfFame() {
   state.hallOfFame.forEach((item, idx) => {
     const card = document.createElement("div");
     card.className = "hof-item-card";
-    const periodText = item.startDate && item.endDate ? `${item.startDate} ~ ${item.endDate}` : (item.date || "기간 미정");
-    const streakSummary = item.streakSummary || `${item.totalDays || 14}일 도전 완주!`;
 
-    card.innerHTML = `
-      <div class="hof-item-icon">🏆</div>
-      <div class="hof-item-details">
-        <span class="hof-item-title">${item.title}</span>
-        <span class="hof-item-date">📅 실천 기간: ${periodText}</span>
-        <span style="font-size:0.75rem; color:var(--pixel-yellow); margin-top:2px;">
-          ⭐️ 일자 스탬프: ${streakSummary}
-        </span>
-      </div>
-    `;
+    if (item.isEditing) {
+      card.innerHTML = `
+        <div class="hof-edit-form">
+          <label style="font-size:0.75rem; font-weight:bold; color:var(--pixel-orange);">습관 제목 수정:</label>
+          <input type="text" id="editHofTitle_${idx}" class="pixel-input" value="${item.title}">
+          
+          <div style="display:flex; gap:4px; align-items:center; margin-top:2px;">
+            <input type="text" id="editHofStart_${idx}" class="pixel-input date-input" value="${item.startDate || '2026.09.01'}" style="width:90px;">
+            <span>~</span>
+            <input type="text" id="editHofEnd_${idx}" class="pixel-input date-input" value="${item.endDate || '2026.09.12'}" style="width:90px;">
+          </div>
+
+          <div style="display:flex; gap:6px; margin-top:6px;">
+            <button class="pixel-btn pixel-btn-sm pixel-btn-success" onclick="saveHOFCard(${idx})">💾 저장</button>
+            <button class="pixel-btn pixel-btn-sm pixel-btn-outline" onclick="cancelEditHOFCard(${idx})">✕ 취소</button>
+          </div>
+        </div>
+      `;
+    } else {
+      const periodText = item.startDate && item.endDate ? `${item.startDate} ~ ${item.endDate}` : (item.date || "기간 미정");
+      const streakSummary = item.streakSummary || `${item.totalDays || 10}일 도전 완주!`;
+
+      card.innerHTML = `
+        <div class="hof-item-body">
+          <div class="hof-item-icon">🏆</div>
+          <div class="hof-item-details">
+            <span class="hof-item-title">${item.title}</span>
+            <span class="hof-item-date">📅 실천 기간: ${periodText}</span>
+            <span style="font-size:0.75rem; color:var(--pixel-yellow); margin-top:2px;">
+              ⭐️ 일자 스탬프: ${streakSummary}
+            </span>
+          </div>
+        </div>
+        <div class="hof-item-actions">
+          <button class="pixel-btn pixel-btn-sm pixel-btn-warning" title="습관 정보 수정" onclick="editHOFCard(${idx})">✏️ 수정</button>
+          <button class="pixel-btn pixel-btn-sm pixel-btn-danger" title="카드 삭제" onclick="deleteHOFCard(${idx})">🗑️ 삭제</button>
+        </div>
+      `;
+    }
+
     grid.appendChild(card);
   });
 }
+
+window.editHOFCard = function(idx) {
+  try { audio.playClick(); } catch (e) {}
+  state.hallOfFame[idx].isEditing = true;
+  renderHallOfFame();
+};
+
+window.cancelEditHOFCard = function(idx) {
+  try { audio.playClick(); } catch (e) {}
+  delete state.hallOfFame[idx].isEditing;
+  renderHallOfFame();
+};
+
+window.saveHOFCard = function(idx) {
+  try { audio.playClick(); } catch (e) {}
+  const newTitle = document.getElementById(`editHofTitle_${idx}`).value.trim();
+  const newStart = document.getElementById(`editHofStart_${idx}`).value.trim();
+  const newEnd = document.getElementById(`editHofEnd_${idx}`).value.trim();
+
+  if (newTitle) {
+    state.hallOfFame[idx].title = newTitle;
+    state.hallOfFame[idx].startDate = newStart;
+    state.hallOfFame[idx].endDate = newEnd;
+    delete state.hallOfFame[idx].isEditing;
+
+    localStorage.setItem("pixel_hall_of_fame", JSON.stringify(state.hallOfFame));
+    renderHallOfFame();
+  }
+};
+
+window.deleteHOFCard = function(idx) {
+  try { audio.playClick(); } catch (e) {}
+  if (confirm(`'${state.hallOfFame[idx].title}' 완료 기념 카드를 명예의 전당에서 삭제하시겠습니까?`)) {
+    state.hallOfFame.splice(idx, 1);
+    localStorage.setItem("pixel_hall_of_fame", JSON.stringify(state.hallOfFame));
+    renderHallOfFame();
+  }
+};
 
 function completeActiveHabitToHOF() {
   if (!confirm(`'${state.activeHabit.title}' (${state.activeHabit.startDate} ~ ${state.activeHabit.endDate}) 습관 실천 기간을 종료하고 명예의 전당 앨범에 완료 기념 카드로 등록하시겠습니까?`)) {
