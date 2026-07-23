@@ -1,0 +1,927 @@
+/* ==========================================================================
+   🎮 8-BIT RETRO PIXEL ART CLASSROOM DASHBOARD - CSS SYSTEM
+   🎨 Warm Retro Palette (No Blue) + Chunky Borders + Solid Block Pixel Shadows
+   ========================================================================== */
+
+:root {
+  /* Warm Retro Arcade Palette */
+  --pixel-bg-main: #FDF6E3;        /* Warm Retro Light Beige Background */
+  --pixel-bg-app: #F4E8D1;         /* Warm Paper/Plank Beige Container */
+  --pixel-bg-card: #FFFBEB;        /* Warm Cream Paper Card (Unflipped) */
+  --pixel-bg-card-flipped: #99E550;/* Retro Pixel Green Card (Flipped) */
+  
+  --pixel-orange: #DF7126;       /* Retro Arcade Orange */
+  --pixel-green: #99E550;        /* Pixel Green */
+  --pixel-red: #D95763;          /* Dot Red */
+  --pixel-gold: #FBF236;         /* Gold Yellow */
+  --pixel-purple: #9A4B8E;       /* Retro Purple */
+  
+  --pixel-border-dark: #222034;  /* Deep Retro Chunky Border Color */
+  --pixel-text: #222034;         /* High Contrast Dark Retro Text */
+  --pixel-text-muted: #625565;   /* Retro Muted Text */
+
+  --font-pixel: 'DungGeunMo', 'Galmuri', 'Press Start 2P', monospace, sans-serif;
+  --font-body: 'DungGeunMo', 'Gowun Dodum', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  image-rendering: pixelated;
+}
+
+body.pixel-body {
+  font-family: var(--font-pixel);
+  background-color: var(--pixel-bg-main);
+  color: var(--pixel-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+  background-image: 
+    radial-gradient(rgba(34, 32, 52, 0.08) 2px, transparent 2px),
+    radial-gradient(rgba(34, 32, 52, 0.08) 2px, var(--pixel-bg-main) 2px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Fullscreen Nano Banana Particle Canvas Overlay */
+.banana-canvas-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Arcade App Container */
+.pixel-app-container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   8-Bit Retro Buttons (Chunky Borders & Solid Block Pixel Shadows)
+   -------------------------------------------------------------------------- */
+.pixel-btn {
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  background: var(--pixel-orange);
+  color: #222034;
+  font-weight: bold;
+  border: 3px solid var(--pixel-border-dark);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.08s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.pixel-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px var(--pixel-border-dark);
+  filter: brightness(1.05);
+}
+
+.pixel-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px var(--pixel-border-dark);
+}
+
+.pixel-btn-primary { background: var(--pixel-orange); color: #ffffff; }
+.pixel-btn-success { background: var(--pixel-green); color: #222034; }
+.pixel-btn-warning { background: var(--pixel-gold); color: #222034; }
+.pixel-btn-danger  { background: var(--pixel-red); color: #ffffff; }
+.pixel-btn-outline { background: #E4A672; color: #222034; }
+
+.pixel-btn-sm {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-width: 2px;
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+}
+
+.pixel-btn-sm:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px var(--pixel-border-dark);
+}
+
+.pixel-btn-lg {
+  font-size: 1.05rem;
+  padding: 10px 22px;
+  border-width: 4px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.pixel-badge {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border: 2px solid var(--pixel-border-dark);
+  border-radius: 2px;
+  background: var(--pixel-gold);
+  color: #222034;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.badge-yellow { background: var(--pixel-gold); color: #222034; }
+.badge-emerald { background: var(--pixel-green); color: #222034; }
+
+.pixel-hotkey {
+  background: rgba(0,0,0,0.15);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(34,32,52,0.4);
+}
+
+/* --------------------------------------------------------------------------
+   8-Bit Top Header Navigation
+   -------------------------------------------------------------------------- */
+.pixel-header {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pixel-logo-icon {
+  font-size: 2.2rem;
+  animation: pixelPulse 2s infinite ease-in-out;
+}
+
+@keyframes pixelPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.header-titles .pixel-title {
+  font-size: 1.45rem;
+  color: var(--pixel-orange);
+  text-shadow: 1px 1px 0px var(--pixel-gold);
+  letter-spacing: 1px;
+}
+
+.header-titles .pixel-subtitle {
+  font-size: 0.82rem;
+  color: var(--pixel-text-muted);
+}
+
+.active-habit-banner {
+  background: var(--pixel-bg-card);
+  border: 3px solid var(--pixel-border-dark);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+  border-radius: 4px;
+}
+
+.habit-banner-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-label {
+  font-size: 0.75rem;
+  color: var(--pixel-orange);
+  font-weight: bold;
+}
+
+.banner-title {
+  font-size: 1.1rem;
+  color: var(--pixel-text);
+  font-weight: bold;
+}
+
+.banner-period {
+  font-size: 0.8rem;
+  color: #B86F28;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Toolbar & Progress Area
+   -------------------------------------------------------------------------- */
+.pixel-main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pixel-toolbar {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.target-status-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-label {
+  font-size: 0.95rem;
+  color: var(--pixel-text-muted);
+  font-weight: bold;
+}
+
+.counter-display {
+  font-size: 1.4rem;
+  color: var(--pixel-text);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.count-current { font-size: 1.9rem; font-weight: bold; color: var(--pixel-orange); }
+.count-target { font-size: 1.4rem; color: #52940F; font-weight: bold; }
+.count-unit { font-size: 0.85rem; color: var(--pixel-text); margin-left: 4px; }
+
+.progress-bar-container {
+  flex: 1;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pixel-progress-outer {
+  width: 100%;
+  height: 20px;
+  background: #E2D7C5;
+  border: 3px solid var(--pixel-border-dark);
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.pixel-progress-inner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pixel-gold) 0%, var(--pixel-green) 100%);
+  transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.progress-percent {
+  font-size: 0.95rem;
+  color: var(--pixel-orange);
+  font-weight: bold;
+  width: 44px;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Dynamic Card Binder Grid (RPG Empty Item Slot Style)
+   -------------------------------------------------------------------------- */
+.card-binder-section {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.binder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #C8B9A6;
+  padding-bottom: 8px;
+}
+
+.binder-header h2 {
+  font-size: 1.25rem;
+  color: var(--pixel-orange);
+}
+
+.binder-sub {
+  font-size: 0.85rem;
+  color: var(--pixel-text-muted);
+}
+
+.card-binder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+  padding: 4px;
+}
+
+/* Retro 8-Bit Pixel Card (3D Flip Animation) */
+.pixel-card-item {
+  height: 150px;
+  perspective: 1000px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pixel-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pixel-card-item.is-flipped .pixel-card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 3px solid var(--pixel-border-dark);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+}
+
+/* Card Front (Unflipped - RPG Inventory Card & Empty Slot Box) */
+.card-front {
+  background: var(--pixel-bg-card);
+}
+
+.card-front:hover {
+  filter: brightness(1.04);
+}
+
+.card-num-badge {
+  font-size: 0.8rem;
+  color: var(--pixel-text);
+  background: #E2D7C5;
+  border: 1px solid var(--pixel-border-dark);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+/* RPG Empty Item Slot (안쪽 음각 그림자 파인 느낌) */
+.card-avatar-box {
+  width: 56px;
+  height: 56px;
+  background: #E2D7C5;
+  border: 2px solid var(--pixel-border-dark);
+  border-radius: 3px;
+  box-shadow: inset 3px 3px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.card-student-name {
+  font-size: 0.95rem;
+  color: var(--pixel-text);
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-status-label {
+  font-size: 0.7rem;
+  color: var(--pixel-text-muted);
+}
+
+/* Card Back (Flipped / Achieved State - Pixel Green) */
+.card-back {
+  background: var(--pixel-bg-card-flipped);
+  border-color: var(--pixel-border-dark);
+  transform: rotateY(180deg);
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+}
+
+.card-back .card-num-badge {
+  background: #FFFBEB;
+  color: #222034;
+}
+
+.banana-pixel-icon {
+  font-size: 2.2rem;
+  animation: bananaBounce 1s infinite alternate;
+}
+
+@keyframes bananaBounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+
+.card-achieved-text {
+  font-size: 0.85rem;
+  color: #222034;
+  font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   Hall of Fame / Archive Section (명예의 전당 앨범)
+   -------------------------------------------------------------------------- */
+.hall-of-fame-section {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.hof-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #C8B9A6;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hof-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hof-icon { font-size: 1.5rem; }
+
+.hof-title-group h2 {
+  font-size: 1.25rem;
+  color: var(--pixel-purple);
+}
+
+.hof-badge {
+  background: var(--pixel-purple);
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.hof-desc {
+  font-size: 0.85rem;
+  color: var(--pixel-text-muted);
+}
+
+.hof-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.hof-item-card {
+  background: var(--pixel-bg-card);
+  border: 3px solid var(--pixel-border-dark);
+  padding: 12px 14px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 3px 3px 0px var(--pixel-border-dark);
+}
+
+.hof-item-icon {
+  font-size: 1.9rem;
+}
+
+.hof-item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.hof-item-title {
+  font-size: 1rem;
+  color: var(--pixel-purple);
+  font-weight: bold;
+}
+
+.hof-item-date {
+  font-size: 0.78rem;
+  color: var(--pixel-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   8-Bit Modals (Chunky Borders & Solid Block Shadows)
+   -------------------------------------------------------------------------- */
+.pixel-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(34, 32, 52, 0.65);
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.pixel-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pixel-modal-card {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  box-shadow: 6px 6px 0px var(--pixel-border-dark);
+  width: 90%;
+  max-width: 520px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.pixel-modal-backdrop.active .pixel-modal-card {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid var(--pixel-border-dark);
+  padding-bottom: 10px;
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  color: var(--pixel-orange);
+}
+
+.pixel-close-btn {
+  background: var(--pixel-red);
+  color: white;
+  border: 2px solid var(--pixel-border-dark);
+  padding: 2px 8px;
+  font-family: var(--font-pixel);
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--pixel-border-dark);
+}
+
+.pixel-close-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px var(--pixel-border-dark);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setting-label {
+  font-size: 0.9rem;
+  color: var(--pixel-orange);
+  font-weight: bold;
+}
+
+.setting-hint {
+  font-size: 0.75rem;
+  color: var(--pixel-text-muted);
+}
+
+.input-with-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pixel-input, .pixel-textarea {
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  background: var(--pixel-bg-card);
+  color: var(--pixel-text);
+  border: 2px solid var(--pixel-border-dark);
+  border-radius: 2px;
+  outline: none;
+}
+
+.pixel-input:focus, .pixel-textarea:focus {
+  border-color: var(--pixel-orange);
+  background: #ffffff;
+}
+
+.pixel-input-full {
+  width: 100%;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Manual Log Confirmation Card */
+.log-confirm-card {
+  max-width: 480px;
+}
+
+.log-preview-box {
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-dark);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.log-row {
+  display: flex;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.log-label {
+  color: var(--pixel-text-muted);
+  font-weight: bold;
+}
+
+.log-val {
+  color: var(--pixel-text);
+}
+
+.highlight-val {
+  color: var(--pixel-orange);
+  font-weight: bold;
+}
+
+.log-achiever-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.achiever-badge {
+  background: var(--pixel-green);
+  color: #222034;
+  border: 1px solid var(--pixel-border-dark);
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.confirm-notice-text {
+  font-size: 0.8rem;
+  color: var(--pixel-red);
+  line-height: 1.3;
+  font-weight: bold;
+}
+
+.banner-period {
+  font-size: 0.8rem;
+  color: #B86F28;
+  margin-top: 2px;
+  font-weight: bold;
+}
+
+.date-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.date-label {
+  font-size: 0.85rem;
+  color: var(--pixel-text-muted);
+  font-weight: bold;
+}
+
+.date-input {
+  width: 130px;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+}
+
+.align-center {
+  text-align: center;
+  align-items: center;
+}
+
+.timer-pixel-card {
+  max-width: 520px;
+}
+
+.timer-habit-info {
+  margin-bottom: 12px;
+}
+
+.timer-habit-info h2 {
+  font-size: 1.4rem;
+  color: var(--pixel-orange);
+  margin: 6px 0;
+}
+
+.timer-period-text {
+  font-size: 0.85rem;
+  color: var(--pixel-text-muted);
+  font-weight: bold;
+}
+
+.pixel-timer-box {
+  background: var(--pixel-bg-card);
+  border: 4px solid var(--pixel-border-dark);
+  box-shadow: inset 3px 3px 0px rgba(0,0,0,0.15);
+  padding: 16px 24px;
+  border-radius: 4px;
+  margin: 12px 0 16px 0;
+  width: 100%;
+}
+
+.pixel-timer-number {
+  font-size: 3.5rem;
+  color: var(--pixel-orange);
+  letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 1px 1px 0px var(--pixel-gold);
+  font-weight: bold;
+}
+
+.pixel-timer-status {
+  font-size: 0.95rem;
+  color: var(--pixel-text-muted);
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.timer-controls-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.timer-finish-action {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.pixel-btn-full {
+  width: 100%;
+  justify-content: center;
+}
+
+.timer-hint {
+  font-size: 0.78rem;
+  color: var(--pixel-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Daily Habit Streak Tracker Section (기간별 일자 추적 스탬프 판)
+   -------------------------------------------------------------------------- */
+.pixel-streak-tracker-section {
+  background: var(--pixel-bg-app);
+  border: 4px solid var(--pixel-border-dark);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 4px 4px 0px var(--pixel-border-dark);
+}
+
+.streak-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.streak-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  color: var(--pixel-orange);
+  font-family: var(--font-pixel);
+  font-weight: bold;
+}
+
+.streak-count-info {
+  background: var(--pixel-gold);
+  color: #222034;
+  border: 2px solid var(--pixel-border-dark);
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.streak-hint {
+  font-size: 0.78rem;
+  color: var(--pixel-text-muted);
+}
+
+.streak-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+  gap: 8px;
+}
+
+.streak-slot {
+  height: 58px;
+  background: #E2D7C5;
+  border: 2px solid var(--pixel-border-dark);
+  border-radius: 3px;
+  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.streak-slot:hover {
+  border-color: var(--pixel-orange);
+  transform: scale(1.05);
+}
+
+.streak-slot-num {
+  font-size: 0.75rem;
+  color: var(--pixel-text-muted);
+}
+
+.streak-slot-icon {
+  font-size: 1.1rem;
+}
+
+.streak-slot.completed {
+  background: var(--pixel-green);
+  border: 2px solid var(--pixel-border-dark);
+  box-shadow: 2px 2px 0px var(--pixel-border-dark);
+}
+
+.streak-slot.completed .streak-slot-num {
+  color: #222034;
+  font-weight: bold;
+}

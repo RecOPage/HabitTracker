@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 8-Bit 마이크로 해빗 카드 바인더</title>
+
+  <!-- Google Pixel Web Fonts: DungGeunMo & Press Start 2P & Gowun Dodum -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DungGeunMo&family=Press+Start+2P&family=Gowun+Dodum:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pixel-body">
+
+  <!-- Fullscreen Pixel Nano Banana Fireworks Canvas Layer -->
+  <canvas id="bananaCanvas" class="banana-canvas-overlay"></canvas>
+
+  <!-- Retro Pixel Arcade App Wrapper -->
+  <div class="pixel-app-container">
+
+    <!-- Top Pixel Header Navigation -->
+    <header class="pixel-header">
+      <div class="header-branding">
+        <div class="pixel-logo-icon">🎮</div>
+        <div class="header-titles">
+          <h1 class="pixel-title">8-BIT HABIT BINDER</h1>
+          <span class="pixel-subtitle">우리 학급 마이크로 해빗 바인더</span>
+        </div>
+      </div>
+
+      <!-- Active Habit Banner -->
+      <div class="active-habit-banner">
+        <span class="pixel-badge badge-yellow">TODAY</span>
+        <div class="habit-banner-info">
+          <div class="banner-title-row">
+            <span class="banner-label">오늘의 습관:</span>
+            <span class="banner-title" id="displayHabitTitle">내 책상 위 물건 3개 정리하기</span>
+          </div>
+          <span class="banner-period" id="displayHabitPeriod">기간: 2026.09.01 ~ 2026.09.30</span>
+        </div>
+        <button class="pixel-btn pixel-btn-sm pixel-btn-warning" id="btnEditActiveHabit">✏️ 수정</button>
+        <button class="pixel-btn pixel-btn-sm pixel-btn-success" id="btnCompleteHabit">🏆 완료 및 전당 등록</button>
+      </div>
+
+      <div class="header-controls">
+        <button class="pixel-btn pixel-btn-warning" id="btnOpenTimerModal" title="Spacebar 키를 누르면 즉시 켜집니다">
+          ⏱️ 1분 실천 타이머 <span class="pixel-hotkey">Space</span>
+        </button>
+        <button class="pixel-btn pixel-btn-primary" id="btnOpenSettings">⚙️ 설정</button>
+    </header>
+
+    <!-- Daily Habit Streak Tracker Section (기간별 일자 추적 스탬프 판) -->
+    <section class="pixel-streak-tracker-section">
+      <div class="streak-header">
+        <div class="streak-title-group">
+          <span class="streak-icon">📅</span>
+          <span class="streak-title">기간별 일자 달성 스탬프 판</span>
+          <span class="streak-count-info" id="streakSummaryText">14일 중 0일 달성 완료</span>
+        </div>
+        <span class="streak-hint">💡 칸을 클릭하여 수동으로 달성 스탬프(🍌)를 도장처럼 찍거나 끌 수 있습니다.</span>
+      </div>
+
+      <div class="streak-slots-grid" id="streakSlotsGrid">
+        <!-- Dynamically rendered 8-bit streak slots -->
+      </div>
+    </section>
+
+    <!-- Main Workspace Layout -->
+    <main class="pixel-main-content">
+
+      <!-- Status & Quick Action Toolbar -->
+      <section class="pixel-toolbar">
+        <div class="target-status-box">
+          <span class="toolbar-label">달성 현황:</span>
+          <div class="counter-display">
+            <span class="count-current" id="currentFlippedCount">0</span>
+            <span class="count-divider">/</span>
+            <span class="count-target" id="targetGoalCount">15</span>
+            <span class="count-unit">명 달성</span>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="pixel-progress-outer">
+            <div class="pixel-progress-inner" id="goalProgressBar" style="width: 0%;"></div>
+          </div>
+          <span class="progress-percent" id="goalProgressPercent">0%</span>
+        </div>
+
+        <div class="toolbar-actions">
+          <button class="pixel-btn pixel-btn-success pixel-btn-lg" id="btnSaveLog">
+            📝 기록 저장 <span class="pixel-hotkey">Enter</span>
+          </button>
+          <button class="pixel-btn pixel-btn-danger" id="btnResetCards">
+            🔄 카드 초기화
+          </button>
+        </div>
+      </section>
+
+      <!-- Dynamic Card Binder Grid Area (Retro RPG Inventory Style) -->
+      <section class="card-binder-section">
+        <div class="binder-header">
+          <h2>🎴 학생 해빗 카드 바인더</h2>
+          <span class="binder-sub" id="binderStudentCountInfo">총 24명 렌더링됨 (클릭하여 카드 flip)</span>
+        </div>
+
+        <!-- Dynamic Grid Container -->
+        <div class="card-binder-grid" id="cardBinderGrid">
+          <!-- Dynamically generated 8-bit cards via JS -->
+        </div>
+      </section>
+
+      <!-- Hall of Fame / Archive Section (명예의 전당 앨범) -->
+      <section class="hall-of-fame-section">
+        <div class="hof-header">
+          <div class="hof-title-group">
+            <span class="hof-icon">🏆</span>
+            <h2>명예의 전당 (HALL OF FAME)</h2>
+            <span class="hof-badge" id="hofCountBadge">0개 완료</span>
+          </div>
+          <span class="hof-desc">우리가 함께 기간별로 성취해 온 완주 습관 앨범</span>
+        </div>
+
+        <div class="hof-badges-grid" id="hofBadgesGrid">
+          <!-- Dynamically rendered archived habit pixel trophy cards -->
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Modal 1: Settings Modal (학생 수 / 목표 수 / 습관 CRUD & 기간 설정) -->
+  <div class="pixel-modal-backdrop" id="settingsModal">
+    <div class="pixel-modal-card">
+      <div class="modal-header">
+        <h3>⚙️ 바인더 환경 설정</h3>
+        <button class="pixel-close-btn" id="btnCloseSettings">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="setting-group">
+          <label class="setting-label">👨‍🎓 학급 학생 수 조절:</label>
+          <div class="input-with-unit">
+            <input type="number" id="inputStudentCount" class="pixel-input" value="24" min="1" max="60">
+            <span class="unit-text">명</span>
+          </div>
+          <p class="setting-hint">입력한 수만큼 카드 그리드가 자동으로 동적 생성됩니다.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">📜 학급 학생 명단 입력 (선택 사항):</label>
+          <textarea id="inputStudentNames" class="pixel-textarea" rows="3" placeholder="학생 이름을 줄바꿈(Enter) 또는 쉼표(,)로 구분하여 입력하세요&#10;예:&#10;김민수&#10;이서연&#10;박준우"></textarea>
+          <p class="setting-hint">미입력 시 '학생 01', '학생 02'로 자동 번호 표출됩니다.</p>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">🎯 단체 보상 목표 인원 조절:</label>
+          <div class="input-with-unit">
+            <input type="number" id="inputTargetGoalCount" class="pixel-input" value="15" min="1" max="60">
+            <span class="unit-text">명 달성 시 단체 폭죽 론칭</span>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">🎴 카드 뒷면 달성 아이콘 선택:</label>
+          <select id="selectCardIcon" class="pixel-input pixel-input-full">
+            <option value="⭐">⭐ 픽셀 별 (Pixel Star)</option>
+            <option value="🏅">🏅 픽셀 메달 (Pixel Medal)</option>
+            <option value="🏆">🏆 픽셀 트로피 (Pixel Trophy)</option>
+          </select>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">📋 오늘의 습관 목표 & 실천 기간 설정:</label>
+          <input type="text" id="inputActiveHabitTitle" class="pixel-input pixel-input-full" value="내 책상 위 물건 3개 정리하기" placeholder="습관 제목 입력">
+          
+          <div class="date-input-row">
+            <span class="date-label">실천 기간:</span>
+            <input type="text" id="inputHabitStartDate" class="pixel-input date-input" value="2026.09.01" placeholder="시작일">
+            <span>~</span>
+            <input type="text" id="inputHabitEndDate" class="pixel-input date-input" value="2026.09.30" placeholder="종료일">
+          </div>
+
+          <div class="input-with-unit" style="margin-top:6px; flex-wrap:wrap;">
+            <span class="date-label">추적 스탬프 칸 수 (주말 제외 등교일):</span>
+            <input type="number" id="inputHabitTotalDays" class="pixel-input" value="10" min="1" max="60" style="width:70px;">
+            <span class="unit-text">일 (주말 제외 등교일 기준)</span>
+          </div>
+
+          <div class="preset-days-row" style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;">
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-outline" onclick="setPresetDays(5)">1주 (5일)</button>
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-warning" onclick="setPresetDays(10)">2주 (10일 - 기본)</button>
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-outline" onclick="setPresetDays(15)">3주 (15일)</button>
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-outline" onclick="setPresetDays(20)">4주 (20일)</button>
+          </div>
+
+          <textarea id="inputActiveHabitDesc" class="pixel-textarea" rows="2" placeholder="습관 상세 설명 입력">1분 동안 내 주변 쓰레기를 줍고 연필을 연필꽂이에 쏙 넣어요!</textarea>
+        </div>
+
+        <div class="setting-group" style="border-top:2px dashed #C8B9A6; padding-top:10px; margin-top:6px;">
+          <label class="setting-label">💾 데이터 파일 백업 및 복원 (안전 보관):</label>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-warning" onclick="exportDataBackup()">📥 데이터 백업 (파일 다운로드)</button>
+            <button type="button" class="pixel-btn pixel-btn-sm pixel-btn-outline" onclick="document.getElementById('fileBackupImport').click()">📤 백업 파일 불러오기</button>
+            <input type="file" id="fileBackupImport" accept=".json" style="display:none;" onchange="importDataBackup(event)">
+          </div>
+          <p class="setting-hint">인터넷 사용 기록을 전체 삭제하거나 PC를 교체하기 전에 백업 파일(.json)로 보관할 수 있습니다.</p>
+        </div>
+
+        <div class="modal-actions">
+          <button class="pixel-btn pixel-btn-primary" id="btnSaveSettings">💾 설정 저장 및 그리드 적용</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Spacebar 1-Minute Visual Pixel Timer Modal -->
+  <div class="pixel-modal-backdrop" id="timerModal">
+    <div class="pixel-modal-card timer-pixel-card">
+      <div class="modal-header">
+        <h3>⏱️ 단체 1분 습관 실천 타이머</h3>
+        <button class="pixel-close-btn" id="btnCloseTimerModal">✕</button>
+      </div>
+
+      <div class="modal-body align-center">
+        <div class="timer-habit-info">
+          <span class="pixel-badge badge-yellow">TODAY MISSION</span>
+          <h2 id="modalTimerHabitTitle">내 책상 위 물건 3개 정리하기</h2>
+          <span class="timer-period-text" id="modalTimerHabitPeriod">기간: 2026.09.01 ~ 2026.09.30</span>
+        </div>
+
+        <!-- 8-Bit Pixel Countdown Timer Display -->
+        <div class="pixel-timer-box">
+          <div class="pixel-timer-number" id="timerDisplay">01:00</div>
+          <div class="pixel-timer-status" id="timerStatus">READY!</div>
+        </div>
+
+        <div class="timer-controls-row">
+          <button class="pixel-btn pixel-btn-success pixel-btn-lg" id="btnTimerStart">▶️ 타이머 시작</button>
+          <button class="pixel-btn pixel-btn-warning pixel-btn-lg" id="btnTimerPause" style="display: none;">⏸️ 일시정지</button>
+          <button class="pixel-btn pixel-btn-outline" id="btnTimerReset">🔄 60초 리셋</button>
+        </div>
+
+        <div class="timer-finish-action">
+          <button class="pixel-btn pixel-btn-primary pixel-btn-lg pixel-btn-full" id="btnTimerFinishMassFlip">
+            🎉 미션 완료! 모든 카드 싹 플립하기 ⭐
+          </button>
+        </div>
+
+        <span class="timer-hint">💡 Spacebar 키를 누르면 타이머 팝업을 바로 켜고 끌 수 있습니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Manual Log Save Confirmation Modal (수동 관찰 일지 저장 확인) -->
+  <div class="pixel-modal-backdrop" id="confirmLogModal">
+    <div class="pixel-modal-card log-confirm-card">
+      <div class="modal-header">
+        <h3>📝 관찰 일지 기록 확인</h3>
+        <button class="pixel-close-btn" id="btnCloseConfirmLog">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="log-preview-box">
+          <div class="log-row">
+            <span class="log-label">기록 일자:</span>
+            <span class="log-val" id="logPreviewDate">2026. 7. 23.</span>
+          </div>
+          <div class="log-row">
+            <span class="log-label">실천 습관:</span>
+            <span class="log-val highlight-val" id="logPreviewHabit">내 책상 위 물건 3개 정리하기</span>
+          </div>
+          <div class="log-row">
+            <span class="log-label">달성 학생 수:</span>
+            <span class="log-val" id="logPreviewAchieverCount">0명</span>
+          </div>
+          <div class="log-achiever-list" id="logPreviewAchieverNames">
+            <!-- Achiever student badges -->
+          </div>
+        </div>
+
+        <p class="confirm-notice-text">
+          ⚠️ 교사 확정 절차: [기록 저장 확정] 버튼을 누르면 관찰 일지 로그로 명시적 보관됩니다.
+        </p>
+
+        <div class="modal-actions">
+          <button class="pixel-btn pixel-btn-success pixel-btn-lg" id="btnConfirmSaveLog">
+            ✅ 기록 저장 확정
+          </button>
+          <button class="pixel-btn pixel-btn-outline" id="btnCancelSaveLog">
+            ❌ 취소
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
