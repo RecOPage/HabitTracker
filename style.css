@@ -61,12 +61,13 @@ body.pixel-body {
 
 /* Arcade App Container */
 .pixel-app-container {
-  width: 100%;
-  max-width: 1280px;
-  padding: 16px 20px;
+  width: 95%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 /* --------------------------------------------------------------------------
@@ -343,14 +344,15 @@ body.pixel-body {
 
 .card-binder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 135px));
+  justify-content: center;
+  gap: 12px;
   padding: 4px;
 }
 
 /* Retro 8-Bit Pixel Card (3D Flip Animation) */
 .pixel-card-item {
-  height: 150px;
+  height: 132px;
   perspective: 1000px;
   cursor: pointer;
   user-select: none;
@@ -406,8 +408,8 @@ body.pixel-body {
 
 /* RPG Empty Item Slot (안쪽 음각 그림자 파인 느낌) */
 .card-avatar-box {
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   background: #E2D7C5;
   border: 2px solid var(--pixel-border-dark);
   border-radius: 3px;
@@ -415,7 +417,7 @@ body.pixel-body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
 
 .card-student-name {
