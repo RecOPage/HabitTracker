@@ -469,7 +469,6 @@ function updateProgressUI() {
       state.hasCelebratedCurrentGoal = true;
       audio.playFanfare();
       starEngine.triggerCelebration();
-      autoStampNextStreakSlot(); // Automatically stamp next day on streak board!
     }
   } else {
     state.hasCelebratedCurrentGoal = false;
@@ -483,6 +482,26 @@ function resetAllCards() {
   state.hasCelebratedCurrentGoal = false;
   renderCardBinderGrid();
   updateProgressUI();
+}
+
+// Complete All Students Mission & Stamp Tracker
+function completeAllStudents() {
+  // Flip all student cards
+  for (let i = 1; i <= state.studentCount; i++) {
+    state.flippedCardIndices.add(i);
+  }
+
+  renderCardBinderGrid();
+  updateProgressUI();
+
+  // Stamp 1 slot on streak tracker board
+  autoStampNextStreakSlot();
+
+  // Play fanfare & fireworks
+  audio.playFanfare();
+  starEngine.triggerCelebration();
+
+  alert(`🎉 오늘의 습관 미션을 우리 반 전체가 [모두 달성]하였습니다! (일자 스탬프 획득 ⭐)`);
 }
 
 // --- Spacebar 1-Minute Visual Pixel Timer Controller ---
@@ -544,18 +563,7 @@ function updateTimerDisplay() {
 // Complete Mission via Timer: Mass Flip All Cards & Launch Fireworks!
 function massFlipAllCardsFromTimer() {
   closeTimerModal();
-
-  for (let i = 1; i <= state.studentCount; i++) {
-    state.flippedCardIndices.add(i);
-  }
-
-  renderCardBinderGrid();
-  updateProgressUI();
-
-  audio.playFanfare();
-  starEngine.triggerCelebration();
-  autoStampNextStreakSlot(); // Stamp next day on streak tracker grid!
-  alert(`🎉 단체 미션 성공! 모든 학생의 카드가 싹 뒤집히고 일자 스탬프가 찍혔습니다! ⭐`);
+  completeAllStudents();
 }
 
 // --- Hall of Fame Archive Controller (완료 기념 카드 앨범) ---
@@ -779,11 +787,11 @@ function setupEventListeners() {
   document.getElementById("btnTimerReset").addEventListener("click", resetTimer);
   document.getElementById("btnTimerFinishMassFlip").addEventListener("click", massFlipAllCardsFromTimer);
 
-  // Manual Log Save Launchers
-  document.getElementById("btnSaveLog").addEventListener("click", openManualLogConfirmModal);
-  document.getElementById("btnCloseConfirmLog").addEventListener("click", closeManualLogConfirmModal);
-  document.getElementById("btnCancelSaveLog").addEventListener("click", closeManualLogConfirmModal);
-  document.getElementById("btnConfirmSaveLog").addEventListener("click", confirmSaveObservationLog);
+  // Complete All Action
+  const btnCompleteAll = document.getElementById("btnCompleteAll");
+  if (btnCompleteAll) {
+    btnCompleteAll.addEventListener("click", completeAllStudents);
+  }
 
   // Card Reset
   document.getElementById("btnResetCards").addEventListener("click", () => {
@@ -811,16 +819,10 @@ function setupKeyboardShortcuts() {
       }
     } else if (e.key === "Enter" && !isInput) {
       e.preventDefault();
-      const confirmModal = document.getElementById("confirmLogModal");
-      if (confirmModal.classList.contains("active")) {
-        confirmSaveObservationLog();
-      } else {
-        openManualLogConfirmModal();
-      }
+      completeAllStudents();
     } else if (e.key === "Escape") {
       closeSettingsModal();
       closeTimerModal();
-      closeManualLogConfirmModal();
     }
   });
 }
